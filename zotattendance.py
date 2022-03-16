@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, send_from_directory, request
+import requests
+import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 
