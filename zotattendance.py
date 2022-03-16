@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
 
 app = Flask(__name__)
 
@@ -18,6 +18,14 @@ def api():
         "success": False,
         "message": "testing"
     })
+
+@app.route("/api/login", methods=["GET"])
+def login():
+    cookies = ""
+    for k, v in enumerate(request.cookies):
+        cookies = k+":"+v
+    return cookies
+
 
 if __name__ == "__main__":
     app.run()
