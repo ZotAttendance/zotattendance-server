@@ -13,7 +13,6 @@
             body {
                 background-color: rgb(33,37,41);
                 display: grid;
-                height: 100vh;
                 margin: 0;
                 padding: 0;
                 place-items: center;
@@ -23,7 +22,7 @@
                 align-items: center;
                 display: flex;
                 flex-direction: column;
-                gap: 36px;
+                margin: 48px 0;
                 justify-content: center;
                 text-align: center;
             }
@@ -35,6 +34,7 @@
             }
 
             #school-img {
+                padding: 96px 0;
                 width: 820px;
             }
 
@@ -52,7 +52,7 @@
                     <img
                         alt="UCI Logo"
                         class="d-inline-block align-text-top"
-                        onclick="location.reload()"
+                        id="home"
                         src="./assets/uci-logo.png"
                     >
                   </a>
@@ -65,12 +65,20 @@
                     <i class="bi bi-exclamation-circle-fill"></i>
                     Authentication Required.
                 </div>
-                <button type="button" class="btn btn-primary">Login</button>
+                <button class="btn btn-primary" id="login-button" type="button">Login</button>
             </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script>
+            window.addEventListener('DOMContentLoaded', (_) => {
+                document
+                    .querySelector('#home')
+                    .addEventListener('click', (_) => location.reload());
+                document
+                    .querySelector('#login-button')
+                    .addEventListener('click', (_) => location.href = 'https://login.uci.edu/ucinetid/webauth?return_url=https://attendance.ics.uci.edu/home');
+            });
         </script>
     </body>
 </html>
