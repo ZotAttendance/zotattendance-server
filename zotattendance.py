@@ -1,11 +1,16 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, session
 
 app = Flask(__name__)
+app.secret_key = b'32f87d601a8fb7d44a86f3549c2e62858a4ac74f48b59edeec9449fed58becf0'    # Replace this key
+
 
 @app.route("/")
-def home():
-    '''Send index.html when users entered the root URL.'''
-    return send_from_directory("static", "index.html")
+def show_index_or_home():
+    '''Send index.html or home.html depending on whether users logged in or not.'''
+    if 'logged_in' not in session:
+        return send_from_directory("static", "index.html")
+    else:
+        return send_from_directory("static", "home.html")
 
 @app.route("/assets/<static_file>")
 def assets(static_file):
@@ -13,11 +18,10 @@ def assets(static_file):
     return send_from_directory("static/assets", static_file)
 
 @app.route("/api/login", methods=['POST'])
-def api():
-    return jsonify({
-        "success": False,
-        "message": "testing"
-    })
+def login():
+    '''Log in users by adding the corresponding entry in the session middleware and redirect them to home.html.'''
+    session['logged_in'] = True
+    return send_from_directory("static", "home.html")
 
 if __name__ == "__main__":
     app.run()

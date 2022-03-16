@@ -10,11 +10,12 @@ This repository hosts the prototype for ZotAttendance, which allows students to 
    + Linux
      + Run `python3 -m venv .`, `cd bin`, and `source ./activate` inside project directory
      + Execute `pip install flask`
-3. Type `export FLASK_ENV=development`
-4. Start the application with `flask run`
+3. Replace the secret key in `zotattendance.py` with `python -c 'import secrets; print(secrets.token_hex())'` or `python3 -c 'import secrets; print(secrets.token_hex())'`
+4. Type `export FLASK_ENV=development` with Linux or `set FLASK_ENV=development` with Windows
+5. Start the application with `flask run`
 
 ## Deployment
-1. Follow step one and two from the "Getting Started" section
+1. Follow step one to three from the "Getting Started" section
 2. Install UWSGI with ```pip install uwsgi```
 3. Install systemd service file which runs uwsgi
     ```
