@@ -1,4 +1,7 @@
+import requests
+import xml.etree.ElementTree as ET
 from flask import Flask, jsonify, request, send_from_directory, session
+from time import asctime
 
 app = Flask(__name__)
 app.secret_key = b'32f87d601a8fb7d44a86f3549c2e62858a4ac74f48b59edeec9449fed58becf0'    # Replace this key
@@ -13,15 +16,34 @@ def show_index_or_home():
         return send_from_directory("static", "home.html")
 
 @app.route("/assets/<static_file>")
-def assets(static_file):
+def assets(static_file: str):
     '''Send other static files like images under the assets/ directory.'''
     return send_from_directory("static/assets", static_file)
 
-@app.route("/api/login", methods=['POST'])
+@app.route("/api/login")
 def login():
-    '''Log in users by adding the corresponding entry in the session middleware and redirect them to home.html.'''
-    session['logged_in'] = True
-    return send_from_directory("static", "home.html")
+    '''Return path after SSO Login validates UCI cookies and gets user details.'''
+    try:
+        user_details = get_user_details(request.cookies.get("ucinetid_auth"))
+        session['logged_in'] = True
+        return send_from_directory("static", "home.html")
+    except Exception as e:
+        app.logger.error(f'{asctime()} repr(error)')
+        return send_from_directory("static", "error.html")
+
+def get_user_details(webauth_cookie: str) -> dict:
+    '''Get user details from webauth_cookie.'''
+    url = f"https://login.uci.edu/ucinetid/webauth_check?ucinetid_auth={webauth_cookie}&return_xml=true"
+    r = requests.get(url)
+    if r.status_code != 200:
+        raise Exception("Login Validation Failed")
+
+    root = ET.fromstring(r.text)
+    user_details = {}
+    for child in root:
+        user_details[child.tag] = child.text
+
+    return user_details
 
 if __name__ == "__main__":
     app.run()

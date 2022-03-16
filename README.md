@@ -6,7 +6,7 @@ This repository hosts the prototype for ZotAttendance, which allows students to 
 2. Set up a virtual environment
    + Windows: Run `python -m venv .`, `cd Scripts`, and `activate` inside project directory
    + Linux: Run `python3 -m venv .`, `cd bin`, and `source ./activate` inside project directory
-3. Execute `pip install flask`
+3. Execute `pip install -r requirements.txt`
 4. Replace the secret key in `zotattendance.py` with `python -c 'import secrets; print(secrets.token_hex())'` or `python3 -c 'import secrets; print(secrets.token_hex())'`
 5. Type `export FLASK_ENV=development` with Linux or `set FLASK_ENV=development` with Windows
 6. Start the application with `flask run`
