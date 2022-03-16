@@ -1,19 +1,23 @@
-from urllib import request
-from flask import Flask
-from flask import request
-from flask import jsonify
-from flask import session
+from flask import Flask, jsonify, send_from_directory
 
 app = Flask(__name__)
 
-@app.route("/", methods=['POST','GET'])
-def hello_world():
-    return "<p>Hello, World!</p>"
+@app.route("/")
+def home():
+    '''Send index.html when users entered the root URL.'''
+    return send_from_directory("static", "index.html")
 
+@app.route("/assets/<static_file>")
+def assets(static_file):
+    '''Send other static files like images under the assets/ directory.'''
+    return send_from_directory("static/assets", static_file)
 
-@app.route("/api", methods=['POST','GET'])
+@app.route("/api/login", methods=['POST'])
 def api():
-    print(request.method)
-    print(request.form)
-    print(request.files)
-    return jsonify(["a","b","c"])
+    return jsonify({
+        "success": False,
+        "message": "testing"
+    })
+
+if __name__ == "__main__":
+    app.run()
