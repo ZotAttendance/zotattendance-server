@@ -13,6 +13,7 @@
             body {
                 background-color: rgb(33,37,41);
                 display: grid;
+                height: 100vh;
                 margin: 0;
                 padding: 0;
                 place-items: center;
@@ -22,9 +23,12 @@
                 align-items: center;
                 display: flex;
                 flex-direction: column;
-                margin: 48px 0;
                 justify-content: center;
-                text-align: center;
+                padding: 48px 0;
+            }
+
+            nav {
+                width: 100%;
             }
 
             img[alt="UCI Logo"] {
@@ -34,8 +38,12 @@
             }
 
             #school-img {
-                padding: 96px 0;
+                padding: 56px 0;
                 width: 820px;
+            }
+
+            #content {
+                text-align: center;
             }
 
             #message {
@@ -47,7 +55,7 @@
     <body>
         <div id="body-container">
             <nav class="navbar navbar-dark bg-dark">
-                <div class="container-fluid">
+                <div class="container">
                   <a class="navbar-brand">
                     <img
                         alt="UCI Logo"
@@ -56,6 +64,7 @@
                         src="./assets/uci-logo.png"
                     >
                   </a>
+                  <button class="btn btn-primary" id="login-button" type="button">Login</button>
                 </div>
             </nav>
     
@@ -65,7 +74,6 @@
                     <i class="bi bi-exclamation-circle-fill"></i>
                     Authentication Required.
                 </div>
-                <button class="btn btn-primary" id="login-button" type="button">Login</button>
             </div>
         </div>
 
