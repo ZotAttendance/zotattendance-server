@@ -1,1 +1,10 @@
+# Python bytecode
 __pycache__
+
+# Python virtual environment
+bin
+include
+lib
+lib64
+share
+pyvenv.cfg
