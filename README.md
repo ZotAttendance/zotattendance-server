@@ -12,7 +12,7 @@ This repository hosts the prototype for ZotAttendance, which allows students to 
 6. Start the application with `flask run`
 
 ## Deployment
-1. Follow step one to three from the "Getting Started" section
+1. Follow step one to four from the "Getting Started" section
 2. Install UWSGI with ```pip install uwsgi```
 3. Install systemd service file which runs uwsgi
     ```
