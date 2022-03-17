@@ -7,7 +7,7 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Login | ZotAttendance</title>
+        <title>Error | ZotAttendance</title>
 
         <style>
             body {
@@ -42,11 +42,6 @@
                 text-align: center;
             }
 
-            #message {
-                color: white;
-                line-height: 2;
-            }
-
             #school-img {
                 padding: 8em 0 0;
                 width: 820px;
@@ -72,7 +67,7 @@
             <div id="content">
                 <div class="alert alert-danger" role="alert">
                     <i class="bi bi-exclamation-circle-fill"></i>
-                    Authentication Required.
+                    <p id="message">Unknown Error. Please Try Again.</p>
                 </div>
                 <img alt="" id="school-img" src="./assets/school.png">
             </div>
@@ -86,7 +81,7 @@
                     .addEventListener('click', (_) => location.reload());
                 document
                     .querySelector('#login-button')
-                    .addEventListener('click', (_) => location.href = 'https://login.uci.edu/ucinetid/webauth?return_url=localhost:5000/api/login');
+                    .addEventListener('click', (_) => location.href = 'https://login.uci.edu/ucinetid/webauth?return_url=https://attendance.ics.uci.edu/api/login');
             });
         </script>
     </body>
