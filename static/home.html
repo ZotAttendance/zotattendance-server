@@ -119,18 +119,22 @@
             }
 
             function indicateAttendance(event) {
+                let courseCode = document.querySelector("#course-selector").value, passcode = document.querySelector("#passcode").value;
                 event.preventDefault();
 
-                let courseCode, response;
-                document.querySelector('#message').innerText = '';
-                fetch(`/api/plugins/popquiz?course_code=${courseCode}&response=${response}`)
-                    .then(response => {
-                        if (response.status === 200) {
-                            document.querySelector('#message').innerText = "Check in Successful."
-                        } else {
-                            document.querySelector('#message').innerText = "Check in Failed."
-                        }
-                    })
+                if (courseCode.length > 0 && passcode.length > 0) {
+                    document.querySelector('#message').innerText = '';
+                    fetch(`/api/plugins/popquiz?course_code=${courseCode}&response=${passcode}`)
+                        .then(response => {
+                            if (response.status === 200) {
+                                document.querySelector('#message').innerText = "Check in Successful."
+                            } else {
+                                document.querySelector('#message').innerText = "Check in Failed."
+                            }
+                        })
+                } else {
+                    document.querySelector('#message').innerText = 'Invalid Value(s).';
+                }
             }
         </script>
     </body>
