@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, send_from_directory, request
-from pymongo import MongoClient
 import requests
 import xml.etree.ElementTree as ET
+from user import get_user_record
 
 app = Flask(__name__)
 
@@ -25,11 +25,9 @@ def login():
     except Exception as e:
         return "login Failed"
 
-    mongo_client = MongoClient('localhost', 27017)
-    sso_collection = mongo_client['sso_db']['user_details']
-    sso_collection.insert_one(user_details)
-    
-    return user_details
+    user_record = get_user_record(user_details)
+
+    return user_record
 
 
 def get_user_details(webauth_cookie: str)->dict:
