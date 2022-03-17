@@ -4,6 +4,7 @@ from flask import Flask, jsonify, redirect, request, send_from_directory, sessio
 from time import asctime
 from user import get_user_record
 from plugin import handle_plugin_request
+from attendance import get_attendance_data
 
 
 app = Flask(__name__)
@@ -51,6 +52,18 @@ def courses():
     except Exception as e:
         app.logger.error(f'{asctime()} {repr(e)}')
         return "Bad Request",400
+
+@app.route("/api/attendance/<course_code>/<class_num>")
+def attendance(course_code: str, class_num: int):
+    try:
+        if get_attendance_data(session['user_record']['campus_id'],course_code,class_num):
+            return "Success", 200
+        else:
+            return "Not Found", 404
+    except Exception as e:
+        app.logger.error(f'{asctime()} {repr(e)}')
+        return "Bad Request",400
+
 
 def get_user_details(webauth_cookie: str) -> dict:
     '''Gets User Details from webauth_cookie'''
