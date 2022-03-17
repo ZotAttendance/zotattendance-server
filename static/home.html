@@ -38,6 +38,10 @@
                 width: 100%;
             }
 
+            #alert {
+                margin: 36px 0 0;
+            }
+
             #content {
                 align-items: center;
                 color: white;
@@ -52,13 +56,6 @@
 
             form {
                 width: 32vw;
-            }
-
-            #message {
-                color: red;
-                font-size: 12px;
-                line-height: 2;
-                margin: 24px 0;
             }
         </style>
     </head>
@@ -83,11 +80,7 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label for="course-selector" class="form-label">Course</label>
-                            <select class="form-select" id="course-selector" required>
-                                <option selected value="1">Class 1</option>
-                                <option value="2">Class 2</option>
-                                <option value="3">Class 3</option>
-                            </select>
+                            <select class="form-select" id="course-selector" required></select>
                         </div>
                         <div class="mb-3">
                             <label for="passcode" class="form-label">Passcode</label>
@@ -105,7 +98,64 @@
                 document
                     .querySelector('#home')
                     .addEventListener('click', (_) => location.reload());
+
+                document
+                    .querySelector(`button[type="submit"]`)
+                    .addEventListener('click', indicateAttendance);
+
+                fetch("/api/courses")
+                    .then(response => response.json())
+                    .then(data => data.forEach(courseCode => {
+                        document
+                            .querySelector("#course-selector")
+                            .insertAdjacentHTML("beforeend", `<option value="${courseCode}">${courseCode}</option>`)
+                    }))
             });
+
+            function indicateAttendance(event) {
+                let courseCode = document.querySelector("#course-selector").value,
+                    passcode = document.querySelector("#passcode").value;
+                event.preventDefault();
+
+                let alert = document.querySelector('#alert');
+                if (alert !== null) {
+                    alert.remove();
+                }
+
+                if (courseCode.length > 0 && passcode.length > 0) {
+                    fetch(`/api/plugins/popquiz?course_code=${courseCode}&response=${passcode}`)
+                        .then(response => {
+                            if (response.status === 200) {
+                                document
+                                    .querySelector('nav')
+                                    .insertAdjacentHTML('afterend', `
+                                        <div class="alert alert-success" id="alert" role="alert">
+                                            <i class="bi bi-check"></i>
+                                            <span>Check in Successful.</span>
+                                        </div>
+                                    `);
+                            } else {
+                                document
+                                    .querySelector('nav')
+                                    .insertAdjacentHTML('afterend', `
+                                        <div class="alert alert-danger" id="alert" role="alert">
+                                            <i class="bi bi-exclamation-circle-fill"></i>
+                                            <span>Check in Failed.</span>
+                                        </div>
+                                    `);
+                            }
+                        })
+                } else {
+                    document
+                        .querySelector('nav')
+                        .insertAdjacentHTML('afterend', `
+                            <div class="alert alert-danger" id="alert" role="alert">
+                                <i class="bi bi-exclamation-circle-fill"></i>
+                                <span>Invalid Value(s).</span>
+                            </div>
+                        `);
+                }
+            }
         </script>
     </body>
 </html>
