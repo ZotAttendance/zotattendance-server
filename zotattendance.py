@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from flask import Flask, jsonify, redirect, request, send_from_directory, session, url_for
 from time import asctime
 from user import get_user_record
+from plugin import handle_plugin_request
 
 
 app = Flask(__name__)
@@ -34,13 +35,22 @@ def login():
         app.logger.error(f'{asctime()} {repr(e)}')
         return send_from_directory("static", "error.html")
 
+@app.route("/api/plugins/<plugin_name>")
+def plugins(plugin_name: str):
+    try:
+        handle_plugin_request(plugin_name,request.args,session)
+        return "Success", 200
+    except Exception as e:
+        app.logger.error(f'{asctime()} {repr(e)}')
+        return "Bad Request",400
+
 @app.route("/api/courses")
 def courses():
     try:
         return jsonify(session['user_record']['courses'])
     except Exception as e:
         app.logger.error(f'{asctime()} {repr(e)}')
-        return send_from_directory("static", "error.html")
+        return "Bad Request",400
 
 def get_user_details(webauth_cookie: str) -> dict:
     '''Gets User Details from webauth_cookie'''
