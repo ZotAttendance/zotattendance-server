@@ -1,6 +1,6 @@
 import requests
 import xml.etree.ElementTree as ET
-from flask import Flask, jsonify, request, send_from_directory, session
+from flask import Flask, jsonify, redirect, request, send_from_directory, session, url_for
 from time import asctime
 from user import get_user_record
 
@@ -29,7 +29,7 @@ def login():
         user_details = get_user_details(request.cookies.get("ucinetid_auth"))
         session['logged_in'] = True
         session['user_record'] = get_user_record(user_details)
-        return send_from_directory("static", "home.html")
+        return redirect(url_for("/"), code=200)
     except Exception as e:
         app.logger.error(f'{asctime()} {repr(e)}')
         return send_from_directory("static", "error.html")
