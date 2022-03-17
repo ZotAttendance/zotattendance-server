@@ -2,7 +2,8 @@ import requests
 import xml.etree.ElementTree as ET
 from flask import Flask, jsonify, request, send_from_directory, session
 from time import asctime
-from pymongo import MongoClient
+from user import get_user_record
+
 
 app = Flask(__name__)
 app.secret_key = b'32f87d601a8fb7d44a86f3549c2e62858a4ac74f48b59edeec9449fed58becf0'    # Replace this key
@@ -27,11 +28,7 @@ def login():
     try:
         user_details = get_user_details(request.cookies.get("ucinetid_auth"))
         session['logged_in'] = True
-
-        mongo_client = MongoClient('localhost', 27017)
-        sso_collection = mongo_client['sso_db']['user_details']
-        sso_collection.insert_one(user_details)
-
+        session['user_record'] = get_user_record(user_details)
         return send_from_directory("static", "home.html")
     except Exception as e:
         app.logger.error(f'{asctime()} {repr(e)}')
