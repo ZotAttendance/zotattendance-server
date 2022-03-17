@@ -34,7 +34,7 @@ def login():
 
         return send_from_directory("static", "home.html")
     except Exception as e:
-        app.logger.error(f'{asctime()} repr(error)')
+        app.logger.error(f'{asctime()} {repr(e)}')
         return send_from_directory("static", "error.html")
 
 def get_user_details(webauth_cookie: str) -> dict:
