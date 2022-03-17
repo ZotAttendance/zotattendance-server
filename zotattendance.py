@@ -29,7 +29,7 @@ def login():
     try:
         user_details = get_user_details(request.cookies.get("ucinetid_auth"))
         session['user_record'] = get_user_record(user_details)
-        return send_from_directory("static", "home.html")
+        return redirect(url_for("show_index_or_home"), code=200)
     except Exception as e:
         app.logger.error(f'{asctime()} {repr(e)}')
         return send_from_directory("static", "error.html")

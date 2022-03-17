@@ -92,6 +92,7 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
+                <p id="message"></p>
             </div>
         </div>
 
@@ -117,8 +118,19 @@
                     }))
             }
 
-            function indicateAttendance() {
-                
+            function indicateAttendance(event) {
+                event.preventDefault();
+
+                let courseCode, response;
+                document.querySelector('#message').innerText = '';
+                fetch(`/api/plugins/popquiz?course_code=${courseCode}&response=${response}`)
+                    .then(response => {
+                        if (response.status === 200) {
+                            document.querySelector('#message').innerText = "Check in Successful."
+                        } else {
+                            document.querySelector('#message').innerText = "Check in Failed."
+                        }
+                    })
             }
         </script>
     </body>

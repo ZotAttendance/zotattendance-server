@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import datetime
 
-def handle(data,session):
+def handle(data, session):
     mongo_client = MongoClient('localhost', 27017)
     plugin_collection = mongo_client['zotattendance-plugins']['popquiz']
     print(data)
