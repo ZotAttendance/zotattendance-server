@@ -101,9 +101,9 @@
                 document
                     .querySelector('#home')
                     .addEventListener('click', (_) => location.reload());
-                /*document
+                document
                     .querySelector(`button[type="submit"]`)
-                    .addEventListener('click', indicateAttendance);*/
+                    .addEventListener('click', indicateAttendance);
                 fetchCourseList();
             });
 
@@ -115,6 +115,10 @@
                             .querySelector("#course-selector")
                             .insertAdjacentHTML("beforeend", `<option value="${courseCode}">${courseCode}</option>`)
                     }))
+            }
+
+            function indicateAttendance() {
+                
             }
         </script>
     </body>
