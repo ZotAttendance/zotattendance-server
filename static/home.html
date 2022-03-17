@@ -83,11 +83,7 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label for="course-selector" class="form-label">Course</label>
-                            <select class="form-select" id="course-selector" required>
-                                <option selected value="1">Class 1</option>
-                                <option value="2">Class 2</option>
-                                <option value="3">Class 3</option>
-                            </select>
+                            <select class="form-select" id="course-selector" required></select>
                         </div>
                         <div class="mb-3">
                             <label for="passcode" class="form-label">Passcode</label>
@@ -105,7 +101,21 @@
                 document
                     .querySelector('#home')
                     .addEventListener('click', (_) => location.reload());
+                /*document
+                    .querySelector(`button[type="submit"]`)
+                    .addEventListener('click', indicateAttendance);*/
+                fetchCourseList();
             });
+
+            function fetchCourseList() {
+                fetch("/api/courses")
+                    .then(response => response.json())
+                    .then(data => data.forEach(courseCode => {
+                        document
+                            .querySelector("#course-selector")
+                            .insertAdjacentHTML("beforeend", `<option value="${courseCode}">${courseCode}</option>`)
+                    }))
+            }
         </script>
     </body>
 </html>
