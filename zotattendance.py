@@ -58,7 +58,7 @@ def courses():
             "message": "Failed to retrieve course list."
         }), 400
 
-@app.route("/api/attendance/<course_code>/<class_num>")
+@app.route("/api/attendance/<course_code>/<int:class_num>")
 def attendance(course_code: str, class_num: int):
     try:
         if get_attendance_data(session['user_record']['campus_id'],course_code,class_num):

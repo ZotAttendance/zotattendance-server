@@ -18,4 +18,4 @@ def handle(data, session):
 def get_attendance(campus_id,course_code,class_num):
     mongo_client = MongoClient('localhost', 27017)
     plugin_collection = mongo_client['zotattendance-plugins']['popquiz']
-    return plugin_collection.find_one({"campuse_id":campus_id, "course_code":course_code, "class_num":class_num})
+    return plugin_collection.find_one({"campus_id":campus_id, "course_code":course_code, "class_num":class_num})
