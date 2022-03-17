@@ -98,13 +98,11 @@
                 document
                     .querySelector('#home')
                     .addEventListener('click', (_) => location.reload());
+
                 document
                     .querySelector(`button[type="submit"]`)
                     .addEventListener('click', indicateAttendance);
-                fetchCourseList();
-            });
 
-            function fetchCourseList() {
                 fetch("/api/courses")
                     .then(response => response.json())
                     .then(data => data.forEach(courseCode => {
@@ -112,7 +110,7 @@
                             .querySelector("#course-selector")
                             .insertAdjacentHTML("beforeend", `<option value="${courseCode}">${courseCode}</option>`)
                     }))
-            }
+            });
 
             function indicateAttendance(event) {
                 let courseCode = document.querySelector("#course-selector").value,
@@ -130,7 +128,7 @@
                             if (response.status === 200) {
                                 document
                                     .querySelector('nav')
-                                    .insertAdjacentHTML('afterbegin', `
+                                    .insertAdjacentHTML('afterend', `
                                         <div class="alert alert-success" id="alert" role="alert">
                                             <i class="bi bi-check"></i>
                                             <span>Check in Successful.</span>
@@ -139,7 +137,7 @@
                             } else {
                                 document
                                     .querySelector('nav')
-                                    .insertAdjacentHTML('afterbegin', `
+                                    .insertAdjacentHTML('afterend', `
                                         <div class="alert alert-danger" id="alert" role="alert">
                                             <i class="bi bi-exclamation-circle-fill"></i>
                                             <span>Check in Failed.</span>
@@ -150,7 +148,7 @@
                 } else {
                     document
                         .querySelector('nav')
-                        .insertAdjacentHTML('afterbegin', `
+                        .insertAdjacentHTML('afterend', `
                             <div class="alert alert-danger" id="alert" role="alert">
                                 <i class="bi bi-exclamation-circle-fill"></i>
                                 <span>Invalid Value(s).</span>
