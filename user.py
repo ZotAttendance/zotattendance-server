@@ -18,5 +18,5 @@ def get_new_user_record(campus_id, ucinetid):
     return {
         "campus_id": campus_id,
         "ucinetid": ucinetid,
-        "classes": ["CS222P", "CS295P", "CS261P"]
+        "courses": ["CS222P", "CS295P", "CS261P"]
     }

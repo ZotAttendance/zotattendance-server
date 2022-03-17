@@ -34,6 +34,14 @@ def login():
         app.logger.error(f'{asctime()} {repr(e)}')
         return send_from_directory("static", "error.html")
 
+@app.route("/api/courses")
+def courses():
+    try:
+        return jsonify(session['user_record']['courses'])
+    except Exception as e:
+        app.logger.error(f'{asctime()} {repr(e)}')
+        return send_from_directory("static", "error.html")
+
 def get_user_details(webauth_cookie: str) -> dict:
     '''Gets User Details from webauth_cookie'''
     url = "https://login.uci.edu/ucinetid/webauth_check?ucinetid_auth=" + webauth_cookie + "&return_xml=true"
