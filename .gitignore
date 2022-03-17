@@ -1,12 +1,18 @@
 # Python bytecode
 __pycache__
 
-# Python virtual environment
+# Python virtual environment (Linux)
 bin
 include
 lib
 lib64
 share
+pyvenv.cfg
+
+# Python virtual environment (Windows)
+Include
+Lib
+Scripts
 pyvenv.cfg
 
 # Visual Studio Code
