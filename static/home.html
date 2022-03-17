@@ -53,13 +53,6 @@
             form {
                 width: 32vw;
             }
-
-            #message {
-                color: red;
-                font-size: 12px;
-                line-height: 2;
-                margin: 24px 0;
-            }
         </style>
     </head>
     <body>
@@ -92,7 +85,6 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
-                <p id="message"></p>
             </div>
         </div>
 
@@ -119,21 +111,43 @@
             }
 
             function indicateAttendance(event) {
-                let courseCode = document.querySelector("#course-selector").value, passcode = document.querySelector("#passcode").value;
+                let courseCode = document.querySelector("#course-selector").value,
+                    passcode = document.querySelector("#passcode").value;
                 event.preventDefault();
 
                 if (courseCode.length > 0 && passcode.length > 0) {
-                    document.querySelector('#message').innerText = '';
+                    document.querySelector('#alert').remove();
                     fetch(`/api/plugins/popquiz?course_code=${courseCode}&response=${passcode}`)
                         .then(response => {
                             if (response.status === 200) {
-                                document.querySelector('#message').innerText = "Check in Successful."
+                                document
+                                    .querySelector('#content')
+                                    .insertAdjacentHTML('afterbegin', `
+                                        <div class="alert alert-success" id="alert" role="alert">
+                                            <i class="bi bi-check"></i>
+                                            <span>Check in Successful.</span>
+                                        </div>
+                                    `);
                             } else {
-                                document.querySelector('#message').innerText = "Check in Failed."
+                                document
+                                    .querySelector('#content')
+                                    .insertAdjacentHTML('afterbegin', `
+                                        <div class="alert alert-danger" id="alert" role="alert">
+                                            <i class="bi bi-exclamation-circle-fill"></i>
+                                            <span>Check in Failed.</span>
+                                        </div>
+                                    `);
                             }
                         })
                 } else {
-                    document.querySelector('#message').innerText = 'Invalid Value(s).';
+                    document
+                        .querySelector('#content')
+                        .insertAdjacentHTML('afterbegin', `
+                            <div class="alert alert-danger" id="alert" role="alert">
+                                <i class="bi bi-exclamation-circle-fill"></i>
+                                <span>Invalid Value(s).</span>
+                            </div>
+                        `);
                 }
             }
         </script>
