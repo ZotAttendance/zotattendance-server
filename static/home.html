@@ -115,8 +115,12 @@
                     passcode = document.querySelector("#passcode").value;
                 event.preventDefault();
 
+                let alert = document.querySelector('#alert');
+                if (alert !== null) {
+                    alert.remove();
+                }
+
                 if (courseCode.length > 0 && passcode.length > 0) {
-                    document.querySelector('#alert').remove();
                     fetch(`/api/plugins/popquiz?course_code=${courseCode}&response=${passcode}`)
                         .then(response => {
                             if (response.status === 200) {
